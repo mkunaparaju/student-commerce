@@ -3,7 +3,7 @@ import os
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Greeting
+from .models import User
 
 # Create your views here.
 #def index(request):
@@ -12,15 +12,16 @@ from .models import Greeting
     	#return HttpResponse('<pre>' + r.text + '</pre>')
 
 def index(request):
-    times = int(os.environ.get('TIMES',3))
-    return HttpResponse('Hello! ' * times)
+	times = int(os.environ.get('TIMES',3))
+    	return HttpResponse('Hello! ' * times)
 
 def db(request):
 
-    greeting = Greeting()
-    greeting.save()
+    #greeting = Greeting()
+    #greeting.save()
 
-    greetings = Greeting.objects.all()
-
-    return render(request, 'db.html', {'greetings': greetings})
+    #greetings = Greeting.objects.all()
+	
+	users = User.objects.all()
+	return render(request, 'db.html', {'users': users})
 

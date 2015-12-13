@@ -11,12 +11,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-#class user(models.Model):
- #   user_id = models.IntegerField(db_column=''unique=True, max_length=80)
-
-#    class Meta:
-#        managed = False
-#        db_table = 'auth_group'
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=80)
@@ -84,6 +78,18 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user_id', 'permission_id'),)
 
 
+class Book(models.Model):
+    book_id = models.AutoField(db_column='BOOK_ID', primary_key=True)  # Field name made lowercase.
+    owner_user = models.ForeignKey('User', db_column='OWNER_USER_ID')  # Field name made lowercase.
+    avail_start = models.TimeField(db_column='AVAIL_START')  # Field name made lowercase.
+    avail_end = models.TimeField(db_column='AVAIL_END')  # Field name made lowercase.
+    name = models.CharField(db_column='NAME', max_length=50)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'book'
+
+
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
     object_id = models.TextField(blank=True, null=True)
@@ -128,9 +134,44 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-class HelloGreeting(models.Model):
-    when = models.DateTimeField()
+class Reservation(models.Model):
+    reserved_id = models.AutoField(db_column='RESERVED_ID', primary_key=True)  # Field name made lowercase.
+    book = models.ForeignKey(Book, db_column='BOOK_ID')  # Field name made lowercase.
+    reserved_user = models.ForeignKey('User', db_column='RESERVED_USER_ID')  # Field name made lowercase.
+    reserved_start = models.TimeField(db_column='RESERVED_START')  # Field name made lowercase.
+    reserved_end = models.TimeField(db_column='RESERVED_END')  # Field name made lowercase.
+    name_book = models.CharField(db_column='NAME_BOOK', max_length=50)  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'hello_greeting'
+        db_table = 'reservation'
+
+
+class Tag(models.Model):
+    tag_id = models.AutoField(db_column='TAG_ID', primary_key=True)  # Field name made lowercase.
+    tag_name = models.CharField(db_column='TAG_NAME', max_length=45)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'tag'
+
+
+class TagBook(models.Model):
+    tag = models.ForeignKey(Tag, db_column='TAG_ID')  # Field name made lowercase.
+    book = models.ForeignKey(Book, db_column='BOOK_ID')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'tag_book'
+        unique_together = (('tag', 'book'),)
+
+
+class User(models.Model):
+    user_id = models.AutoField(db_column='USER_ID', primary_key=True)  # Field name made lowercase.
+    email_id = models.CharField(db_column='EMAIL_ID', max_length=45)  # Field name made lowercase.
+    pswd = models.CharField(db_column='PSWD', max_length=45)  # Field name made lowercase.
+    nickname = models.CharField(db_column='NICKNAME', max_length=45, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'user'
