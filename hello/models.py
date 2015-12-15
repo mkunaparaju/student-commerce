@@ -84,6 +84,7 @@ class Book(models.Model):
     avail_start = models.TimeField(db_column='AVAIL_START')  # Field name made lowercase.
     avail_end = models.TimeField(db_column='AVAIL_END')  # Field name made lowercase.
     name = models.CharField(db_column='NAME', max_length=50)  # Field name made lowercase.
+    last_reserve = models.DateTimeField(db_column='LAST_RESERVE', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -140,7 +141,6 @@ class Reservation(models.Model):
     reserved_user = models.ForeignKey(AuthUser, db_column='RESERVED_USER_ID')  # Field name made lowercase.
     reserved_start = models.TimeField(db_column='RESERVED_START')  # Field name made lowercase.
     reserved_end = models.TimeField(db_column='RESERVED_END')  # Field name made lowercase.
-    name_book = models.CharField(db_column='NAME_BOOK', max_length=50)  # Field name made lowercase.
 
     class Meta:
         managed = False

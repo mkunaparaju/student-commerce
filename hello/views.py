@@ -1,6 +1,7 @@
 import requests
 import os
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login
@@ -8,7 +9,8 @@ from django.template.context_processors import csrf
 from django.template import RequestContext
 #from django.core.context_processors import csrf
 from .models import AuthUser
-
+from .models import Book
+from .models import Reservation
 # Create your views here.
 def index(request):
     # return HttpResponse('Hello from Python!')
@@ -32,7 +34,9 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                state = "You're successfully logged in!"
+                return redirect('landing/', {'user':user})
+                    #return render_to_response('landing.html',{'user':user},context_instance=RequestContext(request))
+                #state = "You're successfully logged in!"
             else:
                 state = "Your account is not active, please contact the site admin."
         else:
@@ -40,6 +44,16 @@ def login_user(request):
 
     return render_to_response('auth.html',{'state':state, 'username': username, 'password':password},context_instance=RequestContext(request))#
     #return direct_to_template('auth.html',{'state':state, 'username': username},)
+
+def landing(request):
+    user = request.user
+    book = Book.objects.all().order_by('last_reserve')
+    user_reserved = Reservation.objects.filter(reserved_user = user.id)
+   # book_user_reserved = Book.objects.filter(book_id = user_reserved.book)
+    book_own = Book.objects.filter(owner_user = user.id)
+    #print user
+    return render_to_response('landing.html',{'book': book, 'user_reserved': user_reserved, 'book_own':book_own, 'user':request.user},context_instance=RequestContext(request))
+    #return render(request, 'landing.html')
 
 def db(request):
 

@@ -1,4 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% extends "base.html" %}
+{% block content %}
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>Log in</title>
@@ -9,11 +11,9 @@ body{
     font-size: 12px;
 }
 </style>
-</head>
-<body>
+</head> -->
+
     {{ state }}
-    {{ username }}
-    {{ password }}
     <form action="/" method="post">{% csrf_token %}
         {% if next %}
         <input type="hidden" name="next" value="{{ next }}" />
@@ -25,5 +25,4 @@ body{
 
         <input type="submit" value="Log In" />
     </form>
-</body>
-</html>
+{% endblock %}

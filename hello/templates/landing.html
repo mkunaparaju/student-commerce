@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="addBook/" method="post">{% csrf_token %}
+Books reserved by the {{user.username}}
+</br>
+	<table border="1" cellpadding="3" id="printTable">
+    <tbody><tr>
+    <th>Book Name</th>
+    <th>Reservation Start</th>
+    <th>Owner</th>
+    </tr>
+    <tr>
+    	{% for books in user_reserved %}
+		<td>{{books.book.name}}	</td>
+		<td>{{books.reserved_start}}</td> 
+		<td>{{books.book.owner_user.username}}</td>   	
+		{% endfor %}
+    </tr>
+    </tbody>
+    </table>
+    </br>
+
+Total Available Books</br> 
+	<table border="1" cellpadding="3" id="printTable">
+		<tbody>
+			<tr>
+				<th>Book Name</th>
+				<th>Last Reserved</th>
+				<th>Owner</th>
+			</tr>
+			<tr>
+				{% for books in book %}
+				<td>{{books.name}}</td>
+				<td>{{books.last_reserve}}</td>
+				<td>{{books.owner_user.username}}</td>
+				{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+	</br>
+
+Books Owned by the User</br>
+
+<table border="1" cellpadding="3" id="printTable">
+		<tbody>
+			<tr>
+				<th>Book Name</th>
+			</tr>
+			<tr>
+				{% for books in book_own %}
+				<td>{{books.name}}</td>
+				{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+	</br>
+ <input type="submit" value="Add a Book" />
+	</form>
+{% endblock %}
