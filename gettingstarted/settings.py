@@ -26,8 +26,8 @@ SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
-
-
+#LOGIN_REDIRECT_URL = '/mainmenu/'
+TEMPLATE_CONTEXT_PROCESSORS = ('django.core.context_processors.request')
 # Application definition
 
 INSTALLED_APPS = (
@@ -43,7 +43,7 @@ INSTALLED_APPS = (
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrfself.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

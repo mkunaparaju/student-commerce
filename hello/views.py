@@ -5,16 +5,15 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login
 from django.template.context_processors import csrf
-
+from django.template import RequestContext
+#from django.core.context_processors import csrf
 from .models import AuthUser
 
 # Create your views here.
-#def index(request):
-	#r = requests.get('http://httpbin.or
-    # c = {}
-    # c.update(csrf(request))g/status/418')
-	#print r.text
-    	#return HttpResponse('<pre>' + r.text + '</pre>')
+def index(request):
+    # return HttpResponse('Hello from Python!')
+    return render(request, 'auth.html')
+
 
 # def index(request):
 # 	times = int(os.environ.get('TIMES',3))
@@ -28,7 +27,7 @@ def login_user(request):
     if request.POST:
         username = request.POST.get('username')
         password = request.POST.get('password')
-
+        
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
@@ -39,8 +38,8 @@ def login_user(request):
         else:
             state = "Your username and/or password were incorrect."
 
-    return render_to_response('auth.html',{'state':state, 'username': username})
-
+    return render_to_response('auth.html',{'state':state, 'username': username, 'password':password},context_instance=RequestContext(request))#
+    #return direct_to_template('auth.html',{'state':state, 'username': username},)
 
 def db(request):
 
