@@ -80,7 +80,7 @@ class AuthUserUserPermissions(models.Model):
 
 class Book(models.Model):
     book_id = models.AutoField(db_column='BOOK_ID', primary_key=True)  # Field name made lowercase.
-    owner_user = models.ForeignKey('User', db_column='OWNER_USER_ID')  # Field name made lowercase.
+    owner_user = models.ForeignKey(AuthUser, db_column='OWNER_USER_ID')  # Field name made lowercase.
     avail_start = models.TimeField(db_column='AVAIL_START')  # Field name made lowercase.
     avail_end = models.TimeField(db_column='AVAIL_END')  # Field name made lowercase.
     name = models.CharField(db_column='NAME', max_length=50)  # Field name made lowercase.
@@ -137,7 +137,7 @@ class DjangoSession(models.Model):
 class Reservation(models.Model):
     reserved_id = models.AutoField(db_column='RESERVED_ID', primary_key=True)  # Field name made lowercase.
     book = models.ForeignKey(Book, db_column='BOOK_ID')  # Field name made lowercase.
-    reserved_user = models.ForeignKey('User', db_column='RESERVED_USER_ID')  # Field name made lowercase.
+    reserved_user = models.ForeignKey(AuthUser, db_column='RESERVED_USER_ID')  # Field name made lowercase.
     reserved_start = models.TimeField(db_column='RESERVED_START')  # Field name made lowercase.
     reserved_end = models.TimeField(db_column='RESERVED_END')  # Field name made lowercase.
     name_book = models.CharField(db_column='NAME_BOOK', max_length=50)  # Field name made lowercase.
@@ -164,14 +164,3 @@ class TagBook(models.Model):
         managed = False
         db_table = 'tag_book'
         unique_together = (('tag', 'book'),)
-
-
-class User(models.Model):
-    user_id = models.AutoField(db_column='USER_ID', primary_key=True)  # Field name made lowercase.
-    email_id = models.CharField(db_column='EMAIL_ID', max_length=45)  # Field name made lowercase.
-    pswd = models.CharField(db_column='PSWD', max_length=45)  # Field name made lowercase.
-    nickname = models.CharField(db_column='NICKNAME', max_length=45, blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'user'
