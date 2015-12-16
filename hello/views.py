@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 from django.shortcuts import render
 from django.shortcuts import redirect
+
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login
@@ -12,6 +13,7 @@ from django.template import RequestContext
 from .models import AuthUser
 from .models import Book
 from .models import Reservation
+from .forms import BookForm
 # Create your views here.
 def index(request):
     # return HttpResponse('Hello from Python!')
@@ -56,26 +58,50 @@ def landing(request):
     return render_to_response('landing.html',{'book': book, 'user_reserved': user_reserved, 'book_own':book_own, 'user':request.user},context_instance=RequestContext(request))
     #return render(request, 'landing.html')
 
+
+
 def addBook(request):
+    state = 'Enter New Book Details here'
+    init = True
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.owner_user = AuthUser.objects.get(pk=request.user.id)
+            #book.last_reserve = timezone.now()
+            book.save()
+            state = 'Newly added Book Details are:'
+            init = False
+            name = book.name
+            avail_start = book.avail_start
+            avail_end = book.avail_end
+            return render_to_response('addBook.html', {'form': form, 'state': state, 'init': init, 'name': name, 'avail_start': avail_start, 'avail_end': avail_end}, context_instance=RequestContext(request))        
 
-    state = 'Add the Book information here'
-    init =1
+
+    else:
+        
+        form = BookForm()
+          
+    return render_to_response('addBook.html', {'form': form, 'state': state, 'init': init}, context_instance=RequestContext(request))
+#     state = 'Add the Book information here'
+#     init =1
     
-    if request.POST:
-        name = request.POST.get('name')
-        avail_start = request.POST.get('start')
-        avail_end = request.POST.get('end')
-        tags = request.POST.get('tags')
-        last_reserve = datetime.now()
-        new_book = Book(name='name',avail_start='avail_start', avail_end='avail_end',last_reserve='last_reserve')
-        new_book.save()
+#     if request.POST:
+#         name = request.POST.get('name')
+#         avail_start = request.POST.get('start')
+#         avail_end = request.POST.get('end')
+#         tags = request.POST.get('tags')
+#         last_reserve = datetime.now()
+        
+#         #all_tags = 
+#         if name:
+#             new_book = Book(name='name',avail_start='avail_start', avail_end='avail_end',last_reserve='last_reserve')
+#             new_book.save()
 
-        #all_tags = 
-        if name:
-            state = 'The information entered is: '
-            init = 0
+#             state = 'The information entered is: '
+#             init = 0
 
-    return render_to_response('addBook.html',{'state' : state, 'init': init, 'name': name, 'avail_end': avail_end, 'avail_start':avail_start, 'tags':tags},context_instance=RequestContext(request))    
+#     return render_to_response('addBook.html',{'state' : state, 'init': init, 'name': name, 'avail_end': avail_end, 'avail_start':avail_start, 'tags':tags},context_instance=RequestContext(request))    
 
 def db(request):
 
