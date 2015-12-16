@@ -1,5 +1,6 @@
 import requests
 import os
+from datetime import datetime
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -54,6 +55,27 @@ def landing(request):
     #print user
     return render_to_response('landing.html',{'book': book, 'user_reserved': user_reserved, 'book_own':book_own, 'user':request.user},context_instance=RequestContext(request))
     #return render(request, 'landing.html')
+
+def addBook(request):
+
+    state = 'Add the Book information here'
+    init =1
+    
+    if request.POST:
+        name = request.POST.get('name')
+        avail_start = request.POST.get('start')
+        avail_end = request.POST.get('end')
+        tags = request.POST.get('tags')
+        last_reserve = datetime.now()
+        new_book = Book(name='name',avail_start='avail_start', avail_end='avail_end',last_reserve='last_reserve')
+        new_book.save()
+
+        #all_tags = 
+        if name:
+            state = 'The information entered is: '
+            init = 0
+
+    return render_to_response('addBook.html',{'state' : state, 'init': init, 'name': name, 'avail_end': avail_end, 'avail_start':avail_start, 'tags':tags},context_instance=RequestContext(request))    
 
 def db(request):
 

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<form action="" method="post">{% csrf_token %}
+		
+		{% if init %}
+		{{state}}
+       	Name of the Book: 
+        
+        <input type="text" name="name" value="{{ name }}" /><br />
+        Availability Start time(PLease add in HH:MM format):
+        <input type="text" name="start" value="{{ start }}" /><br />
+        Availability End Time(PLease add in HH:MM format):
+        <input type="text" name="end" value="{{ end }}" /><br />
+        Description tags(Seperate each tag with a comma):	
+        <textarea name="tags">Enter text here...</textarea>
+        </br>
+        <input type="submit" value="Add the Book" />
+        {% else %}
+        {{state}}
+        </br>
+        Name: {{name}}
+        </br>Availabilit Start Time : {{avail_start}}
+        </br>Availability ENd time : {{avail_end}}
+        </br>Description Tags: {{tags}}
+        </br>
+         <a href="{% url 'hello.views.landing' %}">HOME</a>
+
+
+		{% endif %}                
+</form>	
+
+
+{% endblock %}
