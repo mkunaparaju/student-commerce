@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<form action="{{current_book.name}}/editResource/" method="post">{% csrf_token %}
+
+        Book Name: {{current_book.name}}
+        <table border="1" cellpadding="3" id="printTable">
+    <tbody><tr>
+    <th>Reservation Start</th>
+    <th>Reservation End</th>
+    <th>Reserved by</th>
+    <th>Book Owner</th>
+    </tr>
+    
+    	{% for reserve in reservation %}
+		<tr>
+		<td>{{reserve.reserved_start}}</td> 
+		<td>{{reserve.reserved_end}}</td> 
+		<td>{{reserve.reserved_user.username}}</td>
+		<td>{{current_book.owner_user.username}}</td>   	
+		</tr>
+		{% endfor %}
+    	
+    </tbody>
+    </table>
+    </br>
+
+        <input type="submit" value="Edit the Resource" />
+</form>
+
+
+<form action="{{current_book.name}}/addReserve/" method="post">{% csrf_token %}
+
+        Book Name: {{current_book.name}}
+        <table border="1" cellpadding="3" id="printTable">
+    <tbody><tr>
+    <th>Reservation Start</th>
+    <th>Reservation End</th>
+    <th>Reserved by</th>
+    <th>Book Owner</th>
+    </tr>
+    
+    	{% for reserve in reservation %}
+		<tr>
+		<td>{{reserve.reserved_start}}</td> 
+		<td>{{reserve.reserved_end}}</td> 
+		<td>{{reserve.reserved_user.username}}</td>
+		<td>{{current_book.owner_user.username}}</td>   	
+		</tr>
+		{% endfor %}
+    	
+    </tbody>
+    </table>
+    </br>
+
+        <input type="submit" value="Add A Reservation" />
+</form>
+
+{% endblock %}

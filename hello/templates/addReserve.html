@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<form action="" method="post">{% csrf_token %}
+		{% if init %}
+		{{book}}	
+		{{form.as_p}}
+       	<input type="submit" value="Add the Reservation" />
+       	{% else %}
+       	{{state}}: {{book}}	
+        </br>Reservation Start Time : {{reserve_start}}
+        </br>Resrvation ENd time : {{reserve_end}}
+        </br>
+         <a href="{% url 'hello.views.landing' %}">HOME</a>
+         {% endif %}
+</form>			
+
+
+{% endblock %}

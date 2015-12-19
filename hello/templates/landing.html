@@ -9,17 +9,22 @@ Books reserved by the {{user.username}}
     <tbody><tr>
     <th>Book Name</th>
     <th>Reservation Start</th>
+    <th>Duration</th>
     <th>Owner</th>
+    <th>Delete?</th>
     </tr>
     
     	{% for books in user_reserved %}
 		<tr>
-		<td>{{books.book.name}}	</td>
+		<td><a href="{{books.book.name}}">{{books.book.name}}</a></td>
 		<td>{{books.reserved_start}}</td> 
-		<td>{{books.book.owner_user.username}}</td>   	
+		<td>{{books.reserved_end}}</td> 
+		<td>{{books.book.owner_user.username}}</td> 
+		<td><a href="/deleteReserve">Yes</a></td>
+		
 		</tr>
 		{% endfor %}
-    
+    	
     </tbody>
     </table>
     </br>
@@ -35,7 +40,7 @@ Total Available Books</br>
 			
 				{% for books in book %}
 				<tr>
-				<td>{{books.name}}</td>
+				<td><a href="{{books.name}}">{{books.name}}</a></td>
 				<td>{{books.last_reserve}}</td>
 				<td>{{books.owner_user.username}}</td>
 				</tr>
@@ -55,7 +60,7 @@ Books Owned by the User</br>
 			
 				{% for books in book_own %}
 				</tr>
-					<td>{{books.name}}</td>
+					<td><a href="{{books.name}}">{{books.name}}</a></td>
 				</tr>
 				{% endfor %}
 			
@@ -64,4 +69,6 @@ Books Owned by the User</br>
 	</br>
  <input type="submit" value="Add a Book" />
 	</form>
+
+
 {% endblock %}
