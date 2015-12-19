@@ -16,11 +16,11 @@ Books reserved by the {{user.username}}
     
     	{% for books in user_reserved %}
 		<tr>
-		<td><a href="{{books.book.name}}">{{books.book.name}}</a></td>
+		<td><a href="{{books.book.book_id}}">{{books.book.name}}</a></td>
 		<td>{{books.reserved_start}}</td> 
 		<td>{{books.reserved_end}}</td> 
 		<td>{{books.book.owner_user.username}}</td> 
-		<td><a href="/deleteReserve">Yes</a></td>
+		<td><a href="{{books.reserved_id}}/deleteReserve">Yes</a></td>
 		
 		</tr>
 		{% endfor %}
@@ -40,7 +40,7 @@ Total Available Books</br>
 			
 				{% for books in book %}
 				<tr>
-				<td><a href="{{books.name}}">{{books.name}}</a></td>
+				<td><a href="{{books.book_id}}">{{books.name}}</a></td>
 				<td>{{books.last_reserve}}</td>
 				<td>{{books.owner_user.username}}</td>
 				</tr>
@@ -60,7 +60,7 @@ Books Owned by the User</br>
 			
 				{% for books in book_own %}
 				</tr>
-					<td><a href="{{books.name}}">{{books.name}}</a></td>
+					<td><a href="{{books.book_id}}">{{books.name}}</a></td>
 				</tr>
 				{% endfor %}
 			

@@ -1,8 +1,12 @@
 import requests
 import os
+from django.utils import timezone 
+import datetime
+   
 from datetime import datetime
 from django.shortcuts import render
 from django.shortcuts import redirect
+
 
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
@@ -10,10 +14,13 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.template.context_processors import csrf
 from django.template import RequestContext
+from django.core.exceptions import ObjectDoesNotExist
 #from django.core.context_processors import csrf
 from .models import AuthUser
 from .models import Book
 from .models import Reservation
+from .models import Tag
+from .models import TagBook
 from .forms import BookForm
 from .forms import ReserveForm
 from .forms import RegistrationForm
@@ -75,24 +82,40 @@ def landing(request):
     return render_to_response('landing.html',{'book': book, 'user_reserved': user_reserved, 'book_own':book_own, 'user':request.user},context_instance=RequestContext(request))
     #return render(request, 'landing.html')
 
-
-
 def addBook(request):
     state = 'Enter New Book Details here'
     init = True
     if request.method == 'POST':
         form = BookForm(request.POST)
         if form.is_valid():
+            
+
             book = form.save(commit=False)
             book.owner_user = AuthUser.objects.get(pk=request.user.id)
             book.last_reserve = timezone.now()
+            
             book.save()
+            tags = request.POST.get('descTags')
+            allTags = tags.split(',')
+            for x in allTags:
+                x.strip()
+                try:
+                    TagCheck = Tag.objects.get(tag_name = x)
+                    addTag = TagCheck
+                except:
+                    addTag = Tag.objects.create(tag_name = x)
+                    addTag.save()
+                addTagBook = TagBook(tag = addTag, book = book)
+                addTagBook.save()
+                    
+
             state = 'Newly added Book Details are:'
             init = False
             name = book.name
             avail_start = book.avail_start
             avail_end = book.avail_end
-            return render_to_response('addBook.html', {'form': form, 'state': state, 'init': init, 'name': name, 'avail_start': avail_start, 'avail_end': avail_end}, context_instance=RequestContext(request))   
+            
+            return render_to_response('addBook.html', {'form': form, 'state': state, 'init': init, 'name': name, 'avail_start': avail_start, 'avail_end': avail_end, 'tags':tags}, context_instance=RequestContext(request))   
     else:
 
         form = BookForm()
@@ -100,7 +123,7 @@ def addBook(request):
 
 
 def showBook(request, book):
-    current_book = Book.objects.get(name = book)
+    current_book = Book.objects.get(book_id = book)
     reservation = Reservation.objects.filter(book = current_book.book_id)
     current_user = request.user.id
     book_owner = current_book.owner_user
@@ -117,7 +140,7 @@ def addReserve(request,book):
         form = ReserveForm(request.POST)
         if form.is_valid():
             reserve = form.save(commit=False)
-            reserve.book = Book.objects.get(name = book)
+            reserve.book = Book.objects.get(book_id = book)
             reserve.reserved_user = AuthUser.objects.get(pk=request.user.id)
             reserve.save()  
             state = 'Newly added Reservation Details for the book '
@@ -135,7 +158,7 @@ def addReserve(request,book):
 def editResource(request, book):
     state = 'Edit the book details'
     init = True
-    existBook = Book.objects.get(name = book)
+    existBook = Book.objects.get(book_id = book)
 
     if request.method == 'POST':
         form = BookForm(request.POST, instance=existBook)
@@ -162,8 +185,17 @@ def editResource(request, book):
 
     return render_to_response('editResource.html',{'state': state, 'form':form, 'init': init, 'book':book},context_instance=RequestContext(request))  
 
-def delReserve(request):
-    return render_to_response('editResource.html')  
+def delReserve(request, reserve):
+    state = 'Delete the Reservation for '
+    init = 1
+    existReserve = Reservation.objects.get(reserved_id = reserve)
+    if request.method == 'POST':
+        existReserve.delete()
+        init = 0
+        state = 'Deleted the Reservation'
+        return render_to_response('delReserve.html',{'state': state, 'init': init,},context_instance=RequestContext(request))
+
+    return render_to_response('delReserve.html',{'state': state, 'init': init, 'existReserve': existReserve},context_instance=RequestContext(request))
 
 
 

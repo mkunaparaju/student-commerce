@@ -7,8 +7,10 @@
 		{% if init %}
 		{{state}}	
 		{{form.as_p}}
+		<strong>Description Tags:</strong> <input type="texbox" name="descTags" maxlength="200" size="50"></br>
+		</br>
        	<input type="submit" value="Add the Book" />
-       	
+
        	{% else %}
        	{{state}}
         </br>

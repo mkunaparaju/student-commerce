@@ -2,7 +2,7 @@
 {% block content %}
 
 
-<form action="{{current_book.name}}/editResource/" method="post">{% csrf_token %}
+<form action="{{current_book.book_id}}/editResource/" method="post">{% csrf_token %}
 
         Book Name: {{current_book.name}}
         <table border="1" cellpadding="3" id="printTable">
@@ -30,7 +30,7 @@
 </form>
 
 
-<form action="{{current_book.name}}/addReserve/" method="post">{% csrf_token %}
+<form action="{{current_book.book_id}}/addReserve/" method="post">{% csrf_token %}
 
         Book Name: {{current_book.name}}
         <table border="1" cellpadding="3" id="printTable">
