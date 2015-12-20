@@ -34,7 +34,7 @@ def register(request):
             email=form.cleaned_data['email']
             )
             #login(request, user)
-            return redirect('/')
+            return redirect('/register/success/')
     else:
         form = RegistrationForm()
     variables = RequestContext(request, {'form': form})
