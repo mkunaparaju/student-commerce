@@ -96,7 +96,7 @@ USE_TZ = True
 
 
 # Parse database configuration from $DATABASE_URL
-#DATABASES['default'] =  dj_database_url.config(default='mysql://root:@127.0.0.1/ost')
+DATABASES['default'] =  dj_database_url.config()
 
 # Enable Connection Pooling (if desired)
 #DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
