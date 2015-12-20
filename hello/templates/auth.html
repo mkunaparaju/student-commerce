@@ -16,6 +16,9 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h1 class="text-center">Login</h1>
       </div>
+      <div class = "error">
+      {{state}}
+      </div>
       <div class="modal-body">
           <form class="form col-md-12 center-block" method="post" action="/">{% csrf_token %}
             {% if next %}
@@ -38,6 +41,7 @@
           <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
           </div>    
       </div>
+      
   </div>
   </div>
 </div>

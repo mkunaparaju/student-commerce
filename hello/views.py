@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.template.context_processors import csrf
 from django.template import RequestContext
@@ -69,10 +69,14 @@ def login_user(request):
 
     return render_to_response('auth.html',{'state':state, 'username': username, 'password':password},context_instance=RequestContext(request))#
     #return direct_to_template('auth.html',{'state':state, 'username': username},)
+def logout_view(request):
+    logout(request)
+    return render_to_response('auth.html',context_instance=RequestContext(request))
+   
 
 def landing(request):
     user = request.user
-    book = Book.objects.all().order_by('last_reserve')
+    book = Book.objects.all().order_by('-last_reserve')
 
     user_reserved = Reservation.objects.filter(reserved_user = user.id, reserved_end__gte = timezone.now(),).order_by('reserved_start')
    
