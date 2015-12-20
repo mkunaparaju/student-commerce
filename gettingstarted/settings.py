@@ -78,8 +78,8 @@ WSGI_APPLICATION = 'gettingstarted.wsgi.application'
 DATABASES = {
     'default': {
         'NAME':'ost',
-        #'ENGINE':'django.db.backends.mysql',
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        'ENGINE':'django.db.backends.mysql',
+        #"ENGINE": "django.db.backends.postgresql_psycopg2",
         'USER':'root',
         'OPTIONS': {
         },
@@ -96,7 +96,7 @@ USE_TZ = True
 
 
 # Parse database configuration from $DATABASE_URL
-DATABASES['default'] =  dj_database_url.config()
+#DATABASES['default'] =  dj_database_url.config(default='mysql://root:@127.0.0.1/ost')
 
 # Enable Connection Pooling (if desired)
 #DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'

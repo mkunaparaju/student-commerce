@@ -87,7 +87,8 @@ class Book(models.Model):
     last_reserve = models.DateTimeField(db_column='LAST_RESERVE', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
+        app_label = 'hello'
         db_table = 'book'
 
 
@@ -144,7 +145,8 @@ class Reservation(models.Model):
     duration = models.IntegerField(db_column='DURATION')  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
+        app_label = 'hello'
         db_table = 'reservation'
 
 
@@ -153,7 +155,8 @@ class Tag(models.Model):
     tag_name = models.CharField(db_column='TAG_NAME', unique=True, max_length=45)  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
+        app_label = 'hello'
         db_table = 'tag'
 
 
@@ -162,5 +165,6 @@ class TagBook(models.Model):
     book = models.ForeignKey(Book)
 
     class Meta:
-        managed = False
+        managed = True
+        app_label = 'hello'
         db_table = 'tag_book'
