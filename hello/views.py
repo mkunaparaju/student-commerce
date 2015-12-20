@@ -78,17 +78,21 @@ def logout_view(request):
 
 def landing(request):
     user = request.user
-    book = Book.objects.all().order_by('-last_reserve')
+    if user.is_active : 
+        book = Book.objects.all().order_by('-last_reserve')
 
-    user_reserved = Reservation.objects.filter(reserved_user = user.id, reserved_end__gte = timezone.now(),).order_by('reserved_start')
-   
+        user_reserved = Reservation.objects.filter(reserved_user = user.id, reserved_end__gte = timezone.now(),).order_by('reserved_start')
+       
 
 
-   # book_user_reserved = Book.objects.filter(book_id = user_reserved.book)
-    book_own = Book.objects.filter(owner_user = user.id)
-    #print user
-    return render_to_response('landing.html',{'book': book, 'user_reserved': user_reserved, 'book_own':book_own, 'user':request.user},context_instance=RequestContext(request))
-    #return render(request, 'landing.html')
+       # book_user_reserved = Book.objects.filter(book_id = user_reserved.book)
+        book_own = Book.objects.filter(owner_user = user.id)
+        #print user
+
+        return render_to_response('landing.html',{'book': book, 'user_reserved': user_reserved, 'book_own':book_own, 'user':request.user},context_instance=RequestContext(request))
+        #return render(request, 'landing.html')
+    else 
+        return render_to_response('auth.html',context_instance=RequestContext(request))
 
 def addBook(request):
     state = 'Enter New Book Details here'
