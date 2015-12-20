@@ -160,6 +160,9 @@ def addReserve(request,book):
             bookName = reserve.book.name
             reserve_start = reserve.reserved_start
             duration = reserve.duration
+            if (duration <= 0):
+                state = 'provide positive duration'
+                error = True
             reserve_end = reserve_start + timedelta(minutes = duration)
             reserve.reserved_end = reserve_end
 
