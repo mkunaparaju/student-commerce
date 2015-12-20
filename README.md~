@@ -15,6 +15,7 @@ It has the folowing functionalities:
 - Reservation Deletion Functionality
 
 ## Running Locally
+After installing Heroku and starting your python virtual environment
 
 ```sh
 $ git clone https://github.com/mkunaparaju/student-commerce.git
@@ -47,5 +48,7 @@ $ heroku open
 - Django has a ModelForm utility which can be used to render the html input for forms. This functionality has been provided in forms.py
 - settings.py located in getting started contains provides us with the base dir root, database settings home page dir etc..
 - urls.py takes care of routing the html to its respective view
+
+
 
 

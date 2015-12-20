@@ -50,3 +50,5 @@ $ heroku open
 - urls.py takes care of routing the html to its respective view
 
 
+
+
