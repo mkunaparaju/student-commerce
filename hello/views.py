@@ -90,8 +90,8 @@ def landing(request):
         #print user
 
         return render_to_response('landing.html',{'book': book, 'user_reserved': user_reserved, 'book_own':book_own, 'user':request.user},context_instance=RequestContext(request))
-        #return render(request, 'landing.html')
-    else 
+        
+    else:
         return render_to_response('auth.html',context_instance=RequestContext(request))
 
 def addBook(request):
