@@ -1,19 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 
-
-
 <form action="" method="post">{% csrf_token %}
 		{% if init %}
-		{{book}}	
-		{{form.as_p}}
+		{{state}} : {{book.name}}	
+		{{form.as_table}}
+
+
        	<input type="submit" value="Add the Reservation" />
        	{% else %}
-       	{{state}}: {{book}}	
+
+        {% if overlapObj.exists %}
+         Invalid Reservation. Reservation Already Exists.
+         <a href="/landing/{{book.book_id}}/addReserve">Reserve Again</a>
+
+         {% else %}
+        {{state}}: {{book}} 
         </br>Reservation Start Time : {{reserve_start}}
         </br>Resrvation ENd time : {{reserve_end}}
         </br>
-         <a href="{% url 'hello.views.landing' %}">HOME</a>
+        
+
+         {% endif %}
          {% endif %}
 </form>			
 

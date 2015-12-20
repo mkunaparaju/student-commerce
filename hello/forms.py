@@ -2,18 +2,32 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from .models import Book, Tag, Reservation
 from django.contrib.auth.models import User
+from datetimewidget.widgets import DateTimeWidget
+
 
 class BookForm(forms.ModelForm):
 
     class Meta:
         model = Book
         fields = ('name', 'avail_start', 'avail_end')
+        widgets = {
+            'avail_start': DateTimeWidget(attrs={'id':"yourdatetimeid"}, usel10n = True, bootstrap_version=3),
+            'avail_end': DateTimeWidget(attrs={'id':"datetimeid"}, usel10n = True, bootstrap_version=3)
+       }
 
 class ReserveForm(forms.ModelForm):
+	#reserved_start = forms.DateTimeField(widget=AdminDateWidget())
+	# reserved_start = forms.DateTimeFeild(widget=DateTimeWidget(usel10n=True, bootstrap_version=3))
+	class Meta:
+		model = Reservation
+		fields = ('reserved_start', 'duration')
+		widgets = {
+            'reserved_start': DateTimeWidget(attrs={'id':"yourdatetimeid"}, usel10n = True, bootstrap_version=3)
+       }
 
-    class Meta:
-        model = Reservation
-        fields = ('reserved_start', 'reserved_end')
+	
+		 		
+	
 
 class RegistrationForm(forms.Form):
  

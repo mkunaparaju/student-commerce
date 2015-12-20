@@ -5,15 +5,16 @@
 
 <form action="" method="post">{% csrf_token %}
 		{% if init %}
-		{{state}}: {{book}}	
+		{{state}}
 		{{form.as_p}}
-    
+    <strong>Description Tags:</strong> <input type="texbox" name="descTags" maxlength="200" size="50"></br>
 
        	<input type="submit" value="Edit the Book" />
        	{% else %}
        	{{state}}: {{editName}}	
         </br>Available Start Time : {{navail_start}}
         </br>Available End time : {{navail_end}}
+        
         </br>
          <a href="{% url 'hello.views.landing' %}">HOME</a>
          {% endif %}

@@ -21,8 +21,8 @@ class AuthGroup(models.Model):
 
 
 class AuthGroupPermissions(models.Model):
-    group_id = models.ForeignKey(AuthGroup)
-    permission_id = models.ForeignKey('AuthPermission')
+    group = models.ForeignKey(AuthGroup)
+    permission = models.ForeignKey('AuthPermission')
 
     class Meta:
         managed = False
@@ -32,7 +32,7 @@ class AuthGroupPermissions(models.Model):
 
 class AuthPermission(models.Model):
     name = models.CharField(max_length=255)
-    content_type_id = models.ForeignKey('DjangoContentType')
+    content_type = models.ForeignKey('DjangoContentType')
     codename = models.CharField(max_length=100)
 
     class Meta:
@@ -59,8 +59,8 @@ class AuthUser(models.Model):
 
 
 class AuthUserGroups(models.Model):
-    user_id = models.ForeignKey(AuthUser)
-    group_id = models.ForeignKey(AuthGroup)
+    user = models.ForeignKey(AuthUser)
+    group = models.ForeignKey(AuthGroup)
 
     class Meta:
         managed = False
@@ -69,8 +69,8 @@ class AuthUserGroups(models.Model):
 
 
 class AuthUserUserPermissions(models.Model):
-    user_id = models.ForeignKey(AuthUser)
-    permission_id = models.ForeignKey(AuthPermission)
+    user = models.ForeignKey(AuthUser)
+    permission = models.ForeignKey(AuthPermission)
 
     class Meta:
         managed = False
@@ -81,8 +81,8 @@ class AuthUserUserPermissions(models.Model):
 class Book(models.Model):
     book_id = models.AutoField(db_column='BOOK_ID', primary_key=True)  # Field name made lowercase.
     owner_user = models.ForeignKey(AuthUser, db_column='OWNER_USER_ID')  # Field name made lowercase.
-    avail_start = models.TimeField(db_column='AVAIL_START')  # Field name made lowercase.
-    avail_end = models.TimeField(db_column='AVAIL_END')  # Field name made lowercase.
+    avail_start = models.DateTimeField(db_column='AVAIL_START')  # Field name made lowercase.
+    avail_end = models.DateTimeField(db_column='AVAIL_END')  # Field name made lowercase.
     name = models.CharField(db_column='NAME', max_length=50)  # Field name made lowercase.
     last_reserve = models.DateTimeField(db_column='LAST_RESERVE', blank=True, null=True)  # Field name made lowercase.
 
@@ -139,8 +139,11 @@ class Reservation(models.Model):
     reserved_id = models.AutoField(db_column='RESERVED_ID', primary_key=True)  # Field name made lowercase.
     book = models.ForeignKey(Book, db_column='BOOK_ID')  # Field name made lowercase.
     reserved_user = models.ForeignKey(AuthUser, db_column='RESERVED_USER_ID')  # Field name made lowercase.
-    reserved_start = models.TimeField(db_column='RESERVED_START')  # Field name made lowercase.
-    reserved_end = models.TimeField(db_column='RESERVED_END')  # Field name made lowercase.
+    reserved_start = models.DateTimeField(db_column='RESERVED_START')  # Field name made lowercase.
+    reserved_end = models.DateTimeField(db_column='RESERVED_END')  # Field name made lowercase.
+    duration = models.IntegerField(db_column='DURATION')  # Field name made lowercase.
+
+    
 
     class Meta:
         managed = False
@@ -149,7 +152,7 @@ class Reservation(models.Model):
 
 class Tag(models.Model):
     tag_id = models.AutoField(db_column='TAG_ID', primary_key=True)  # Field name made lowercase.
-    tag_name = models.CharField(db_column='TAG_NAME', max_length=45)  # Field name made lowercase.
+    tag_name = models.CharField(db_column='TAG_NAME', unique=True, max_length=45)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -157,10 +160,9 @@ class Tag(models.Model):
 
 
 class TagBook(models.Model):
-    tag = models.ForeignKey(Tag, db_column='TAG_ID')  # Field name made lowercase.
-    book = models.ForeignKey(Book, db_column='BOOK_ID')  # Field name made lowercase.
+    tag = models.ForeignKey(Tag)
+    book = models.ForeignKey(Book)
 
     class Meta:
         managed = False
         db_table = 'tag_book'
-        unique_together = (('tag', 'book'),)

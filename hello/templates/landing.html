@@ -9,6 +9,7 @@ Books reserved by the {{user.username}}
     <tbody><tr>
     <th>Book Name</th>
     <th>Reservation Start</th>
+    <th>Reservation Start</th>
     <th>Duration</th>
     <th>Owner</th>
     <th>Delete?</th>
@@ -19,6 +20,7 @@ Books reserved by the {{user.username}}
 		<td><a href="{{books.book.book_id}}">{{books.book.name}}</a></td>
 		<td>{{books.reserved_start}}</td> 
 		<td>{{books.reserved_end}}</td> 
+		<td>{{books.duration}}</td> 
 		<td>{{books.book.owner_user.username}}</td> 
 		<td><a href="{{books.reserved_id}}/deleteReserve">Yes</a></td>
 		

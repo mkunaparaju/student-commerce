@@ -1,17 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
 
+{% if isUser %}
 
 <form action="{{current_book.book_id}}/editResource/" method="post">{% csrf_token %}
 
         Book Name: {{current_book.name}}
+        
+        </br>
+        Availability Start Time : {{current_book.avail_start}}
+        </br>
+        Availability Start Time : {{current_book.avail_end}}
+        
         <table border="1" cellpadding="3" id="printTable">
     <tbody><tr>
     <th>Reservation Start</th>
     <th>Reservation End</th>
     <th>Reserved by</th>
     <th>Book Owner</th>
-    </tr>
+   	</tr>
     
     	{% for reserve in reservation %}
 		<tr>
@@ -26,13 +33,21 @@
     </table>
     </br>
 
-        <input type="submit" value="Edit the Resource" />
+	Tag Descriptors:{% for x in allTags %} <a href="{{x.tag.tag_id}}/showTag">{{x.tag.tag_name}}</a>{% endfor %}
+	</br>
+	        <input type="submit" value="Edit the Resource" />
 </form>
 
-
+{% else %}
+ 
 <form action="{{current_book.book_id}}/addReserve/" method="post">{% csrf_token %}
 
         Book Name: {{current_book.name}}
+        </br>
+        Availability Start Time : {{current_book.avail_start}}
+        </br>
+        Availability Start Time : {{current_book.avail_end}}
+        
         <table border="1" cellpadding="3" id="printTable">
     <tbody><tr>
     <th>Reservation Start</th>
@@ -46,15 +61,16 @@
 		<td>{{reserve.reserved_start}}</td> 
 		<td>{{reserve.reserved_end}}</td> 
 		<td>{{reserve.reserved_user.username}}</td>
-		<td>{{current_book.owner_user.username}}</td>   	
+		<td>{{current_book.owner_user.username}}</td>
+		   	
 		</tr>
 		{% endfor %}
     	
     </tbody>
     </table>
     </br>
-
+Tag Descriptors:{% for x in allTags %} <a href="{{x.tag.tag_id}}/showTag">{{x.tag.tag_name}}</a>{% endfor %}</br> 
         <input type="submit" value="Add A Reservation" />
 </form>
-
+{% endif %}
 {% endblock %}
