@@ -78,7 +78,8 @@ WSGI_APPLICATION = 'gettingstarted.wsgi.application'
 DATABASES = {
     'default': {
         'NAME':'ost',
-        'ENGINE':'django.db.backends.mysql',
+        #'ENGINE':'django.db.backends.mysql',
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
         'USER':'root',
         'OPTIONS': {
           'autocommit': True,
