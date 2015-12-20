@@ -10,8 +10,8 @@
        	<input type="submit" value="Add the Reservation" />
        	{% else %}
 
-        {% if overlapObj.exists %}
-         Invalid Reservation. Reservation Already Exists.
+        {% if error %}
+         {{state}}
          <a href="/landing/{{book.book_id}}/addReserve">Reserve Again</a>
 
          {% else %}

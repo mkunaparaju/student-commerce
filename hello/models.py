@@ -143,8 +143,6 @@ class Reservation(models.Model):
     reserved_end = models.DateTimeField(db_column='RESERVED_END')  # Field name made lowercase.
     duration = models.IntegerField(db_column='DURATION')  # Field name made lowercase.
 
-    
-
     class Meta:
         managed = False
         db_table = 'reservation'

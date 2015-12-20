@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 from django.template.context_processors import csrf
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
+from django.core import serializers
 from .models import AuthUser
 from .models import Book
 from .models import Reservation
@@ -126,7 +127,7 @@ def addBook(request):
 
 def showBook(request, book):
     current_book = Book.objects.get(book_id = book)
-    reservation = Reservation.objects.filter(book = current_book.book_id)
+    reservation = Reservation.objects.filter(book = current_book.book_id, reserved_end__gte = timezone.now())
     current_user = request.user.username
     book_owner = current_book.owner_user.username
 
@@ -160,9 +161,9 @@ def addReserve(request,book):
             overlapObj = Reservation.objects.filter(reserved_start__lt = reserve_end, reserved_end__gt = reserve_start)
             state = 'Reservation in the time frame already exists'
             error = True
-            bookavail = Book.objects.get(book_id = book)
-            bookavail_start = bookavail.avail_start
-            bookavail_end = bookavail.avail_end
+            
+            bookavail_start = book.avail_start
+            bookavail_end = book.avail_end
 
             if (len(overlapObj) == 0) :
                 reserve.save()
@@ -231,4 +232,12 @@ def showTag(request, tagid):
     
 
     return render_to_response('showTag.html',{'state': state,'tagid':tagid, 'tagBook':tagBook},context_instance=RequestContext(request))
+
+def rssFeed(request, book):
+    
+    data = serializers.serialize("xml", Reservation.objects.filter(book_id = book))
+
+
+    return render_to_response('rssFeed.html',{'data':data},context_instance=RequestContext(request))
+
 

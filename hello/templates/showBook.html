@@ -34,6 +34,9 @@
     </br>
 
 	Tag Descriptors:{% for x in allTags %} <a href="{{x.tag.tag_id}}/showTag">{{x.tag.tag_name}}</a>{% endfor %}
+
+
+    <a href="/{{current_book.book_id}}/rssFeed">RSS LINK</a> </br>
 	</br>
 	        <input type="submit" value="Edit the Resource" />
 </form>
@@ -70,6 +73,8 @@
     </table>
     </br>
 Tag Descriptors:{% for x in allTags %} <a href="{{x.tag.tag_id}}/showTag">{{x.tag.tag_name}}</a>{% endfor %}</br> 
+
+<a href="/{{current_book.book_id}}/rssFeed">RSS LINK</a> </br>
         <input type="submit" value="Add A Reservation" />
 </form>
 {% endif %}
