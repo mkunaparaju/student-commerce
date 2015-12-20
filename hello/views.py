@@ -33,8 +33,8 @@ def register(request):
             password=form.cleaned_data['password1'],
             email=form.cleaned_data['email']
             )
-            login(request, user)
-            return redirect('/register/success/')
+            #login(request, user)
+            return redirect('/')
     else:
         form = RegistrationForm()
     variables = RequestContext(request, {'form': form})
@@ -160,9 +160,7 @@ def addReserve(request,book):
             bookName = reserve.book.name
             reserve_start = reserve.reserved_start
             duration = reserve.duration
-            if (duration <= 0):
-                state = 'provide positive duration'
-                error = True
+
             reserve_end = reserve_start + timedelta(minutes = duration)
             reserve.reserved_end = reserve_end
 
@@ -180,6 +178,10 @@ def addReserve(request,book):
 
             if (reserve_start < bookavail_start or reserve_end > bookavail_end):
                 state = 'book is not available '
+                error = True
+
+            if (duration <= 0):
+                state = 'provide positive duration'
                 error = True
                         
             init = False
