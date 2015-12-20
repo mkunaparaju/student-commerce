@@ -233,11 +233,11 @@ def showTag(request, tagid):
 
     return render_to_response('showTag.html',{'state': state,'tagid':tagid, 'tagBook':tagBook},context_instance=RequestContext(request))
 
-def rssFeed(request, book):
+# def rssFeed(request, book):
     
-    data = serializers.serialize("xml", Reservation.objects.filter(book_id = book))
+#     data = serializers.serialize("xml", Reservation.objects.filter(book_id = book))
 
 
-    return render_to_response('rssFeed.html',{'data':data},context_instance=RequestContext(request))
+#     return render_to_response('rssFeed.html',{'data':data},context_instance=RequestContext(request))
 
 

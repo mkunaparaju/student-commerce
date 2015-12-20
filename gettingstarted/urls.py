@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     url(r'^landing/addBook/$', 'hello.views.addBook'),
     url(r'^landing/(?P<book>[0-9]+)/addReserve/$', 'hello.views.addReserve'),
     url(r'^landing/(?P<book>[0-9]+)/editResource/$', 'hello.views.editResource'),
-    url(r'^(?P<book>[0-9]+)/rssFeed$', 'hello.views.rssFeed'),
+    #url(r'^(?P<book>[0-9]+)/rssFeed$', 'hello.views.rssFeed'),
     url(r'^landing/(?P<tagid>[0-9]+)/showTag$', 'hello.views.showTag'),
 
     #url(r'^logout/$', 'django.contrib.auth.views.logout'),
