@@ -15,6 +15,7 @@ It has the folowing functionalities:
 - Reservation Deletion Functionality
 
 ## Running Locally
+After installing Heroku and starting your python virtual environment
 
 ```sh
 $ git clone https://github.com/mkunaparaju/student-commerce.git

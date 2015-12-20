@@ -197,9 +197,11 @@ def editResource(request, book):
     state = 'Edit the book details'
     init = True
     existBook = Book.objects.get(book_id = book)
-
+    oldName = existBook.name
+    oldAvail = existBook.avail_start
+    oldEnd = existBook.avail_end
     if request.method == 'POST':
-        form = EditBookForm(request.POST, instance=existBook)
+        form = EditBookForm(request.POST,initial= {'name':oldName, 'avail_start':oldAvail, 'avail_end': oldEnd}, instance=existBook,)
         if form.is_valid():
 
             bookDetails = form.save(commit=False)
@@ -219,7 +221,7 @@ def editResource(request, book):
     else:
         
         data = {'name': '{{book}}', 'avail_start':'{{existBook.avail_start}}', 'avail_end': '{{existBook.avail_end}}'}
-        form = ReserveForm(initial=existBook)
+        form = EditBookForm(initial= {'name':oldName, 'avail_start':oldAvail, 'avail_end': oldEnd})
 
     return render_to_response('editResource.html',{'state': state, 'form':form, 'init': init, 'book':book},context_instance=RequestContext(request))  
 
