@@ -33,6 +33,7 @@ def register(request):
             password=form.cleaned_data['password1'],
             email=form.cleaned_data['email']
             )
+            login(request, user)
             return redirect('/register/success/')
     else:
         form = RegistrationForm()
