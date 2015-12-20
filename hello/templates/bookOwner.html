@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+Reservations of the user </br>
+
+<table border="1" cellpadding="3" id="printTable">
+    <tbody><tr>
+    <th>Book Name</th>
+    <th>Reservation Start</th>
+    <th>Reservation End</th>
+    <th>Duration</th>
+    <th>Owner</th>
+    <th>Delete?</th>
+    </tr>
+    
+    	{% for books in reservations %}
+		<tr>
+		<td><a href="{{books.book.book_id}}">{{books.book.name}}</a></td>
+		<td>{{books.reserved_start}}</td> 
+		<td>{{books.reserved_end}}</td> 
+		<td>{{books.duration}}</td> 
+		<td>{{books.book.owner_user.username}}</td> 
+		
+		</tr>
+		{% endfor %}
+    	
+    </tbody>
+    </table>
+    </br>
+
+
+    Books Owned by the User</br>
+
+<table border="1" cellpadding="3" id="printTable">
+		<tbody>
+			<tr>
+				<th>Book Name</th>
+			</tr>
+			
+				{% for books in books %}
+				</tr>
+					<td><a href="{{books.book_id}}">{{books.name}}</a></td>
+				</tr>
+				{% endfor %}
+			
+		</tbody>
+	</table>
+	</br>
+
+{% endblock %}

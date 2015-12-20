@@ -6,7 +6,9 @@
 <form action="{{current_book.book_id}}/editResource/" method="post">{% csrf_token %}
 
         Book Name: {{current_book.name}}
-        
+        </br>
+        Book Owner: <a href="/bookOwner/{{current_book.owner_user.id}}">{{current_book.owner_user.username}}</a> 
+        </br>
         </br>
         Availability Start Time : {{current_book.avail_start}}
         </br>

@@ -201,7 +201,7 @@ def editResource(request, book):
     oldAvail = existBook.avail_start
     oldEnd = existBook.avail_end
     if request.method == 'POST':
-        form = EditBookForm(request.POST,initial= {'name':oldName, 'avail_start':oldAvail, 'avail_end': oldEnd}, instance=existBook,)
+        form = EditBookForm(request.POST, instance=existBook,)
         if form.is_valid():
 
             bookDetails = form.save(commit=False)
@@ -253,4 +253,13 @@ def rssFeed(request, book):
 
     return render_to_response('rssFeed.html',{'data':data},context_instance=RequestContext(request))
 
+
+def bookOwner(request, owner):
+    #user = AuthUser.objects.get(username = owner)
+    #user = AuthUser.objects.get(pk=owner)
+            
+    books = Book.objects.filter(owner_user = owner)
+    reservations = Reservation.objects.filter(reserved_user = owner)
+
+    return render_to_response('bookOwner.html',{'books':books, 'reservations': reservations},context_instance=RequestContext(request))
 
