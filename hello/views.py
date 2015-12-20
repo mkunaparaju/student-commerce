@@ -20,6 +20,7 @@ from .models import Reservation
 from .models import Tag
 from .models import TagBook
 from .forms import BookForm
+from .forms import EditBookForm
 from .forms import ReserveForm
 from .forms import RegistrationForm
 # Create your views here.
@@ -198,7 +199,7 @@ def editResource(request, book):
     existBook = Book.objects.get(book_id = book)
 
     if request.method == 'POST':
-        form = BookForm(request.POST, instance=existBook)
+        form = EditBookForm(request.POST, instance=existBook)
         if form.is_valid():
 
             bookDetails = form.save(commit=False)

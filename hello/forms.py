@@ -15,6 +15,16 @@ class BookForm(forms.ModelForm):
             'avail_end': DateTimeWidget(attrs={'id':"datetimeid"}, usel10n = True, bootstrap_version=3)
        }
 
+class EditBookForm(forms.ModelForm):
+
+    class Meta:
+        model = Book
+        fields = ('name', 'avail_start', 'avail_end')
+        widgets = {
+            'avail_start': DateTimeWidget(attrs={'id':"yourdatetimeid"}, usel10n = True, bootstrap_version=3),
+            'avail_end': DateTimeWidget(attrs={'id':"datetimeid"}, usel10n = True, bootstrap_version=3)
+       }
+
 class ReserveForm(forms.ModelForm):
 	#reserved_start = forms.DateTimeField(widget=AdminDateWidget())
 	# reserved_start = forms.DateTimeFeild(widget=DateTimeWidget(usel10n=True, bootstrap_version=3))
