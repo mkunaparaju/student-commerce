@@ -82,7 +82,6 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         'USER':'root',
         'OPTIONS': {
-          'autocommit': True,
         },
     }
 }
