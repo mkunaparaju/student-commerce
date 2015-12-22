@@ -247,7 +247,7 @@ def delReserve(request, reserve):
     init = 1
     existReserve = Reservation.objects.get(reserved_id = reserve)
     if request.method == 'POST':
-        existReserve.count = existReserve.count -1
+       
         existReserve.delete()
         init = 0
         state = 'Deleted the Reservation'
