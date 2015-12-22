@@ -15,7 +15,7 @@ Reservations of the user </br>
     
     	{% for books in reservations %}
 		<tr>
-		<td><a href="{{books.book.book_id}}">{{books.book.name}}</a></td>
+		<td><a href="/landing/{{books.book.book_id}}">{{books.book.name}}</a></td>
 		<td>{{books.reserved_start}}</td> 
 		<td>{{books.reserved_end}}</td> 
 		<td>{{books.duration}}</td> 
