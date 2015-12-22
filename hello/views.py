@@ -183,17 +183,25 @@ def addReserve(request,book):
             
             bookavail_start = book.avail_start
             bookavail_end = book.avail_end
+            
+            if reserve_end < timezone.now():
+                state = 'Make a reservation in the future'
+                error =True
+                return render_to_response('addReserve.html', {'error':error,'form': form, 'state': state, 'init': init, 'book':book,'bookName': bookName, 'reserve_start': reserve_start, 'reserve_end': reserve_end, 'duration': duration}, context_instance=RequestContext(request))
 
             
             if (reserve_start < bookavail_start or reserve_end > bookavail_end):
                 state = 'book is not available '
                 error = True
+                return render_to_response('addReserve.html', {'error':error,'form': form, 'state': state, 'init': init, 'book':book,'bookName': bookName, 'reserve_start': reserve_start, 'reserve_end': reserve_end, 'duration': duration}, context_instance=RequestContext(request))
 
-            elif (duration <= 0):
+            if (duration <= 0):
                 state = 'provide positive duration'
                 error = True
+                return render_to_response('addReserve.html', {'error':error,'form': form, 'state': state, 'init': init, 'book':book,'bookName': bookName, 'reserve_start': reserve_start, 'reserve_end': reserve_end, 'duration': duration}, context_instance=RequestContext(request))
+
             
-            elif (len(overlapObj) == 0) :
+            if (len(overlapObj) == 0) :
                
                 reserve.save()
                 state = 'Newly added Reservation Details for the book '
