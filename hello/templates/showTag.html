@@ -2,10 +2,10 @@
 {% block content %}
 
 		{{state}}
-      
+      </br>
 
     {% for x in tagBook %}
-          <a href="/landing/{{x.book.book_id}}">{{x.book.name}}</a> </br>
+          <a class = "btn-primary" href="/landing/{{x.book.book_id}}">{{x.book.name}}</a> </br>
     {% endfor %}
     </br>
          

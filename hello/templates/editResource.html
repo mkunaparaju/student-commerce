@@ -5,11 +5,14 @@
 
 <form action="" method="post">{% csrf_token %}
 		{% if init %}
-		{{state}}
+		<h2>{{state}}</h2>
+    </br>
 		{{form.as_p}}
-    <strong>Description Tags:</strong> <input type="texbox" name="descTags" value = "" maxlength="200" size="50"></br>
-
-       	<input type="submit" value="Edit the Book" />
+    </br>
+    <strong>Description Tags:</strong> <input type="texbox" name="descTags" value = "" maxlength="200" size="50">
+    </br>
+    </br>
+       	<input class = "btn-primary" type="submit" value="Edit the Book" />
        	{% else %}
        	{{state}}: {{editName}}	
 

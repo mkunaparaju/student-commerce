@@ -233,9 +233,7 @@ def editResource(request, book):
             editName = bookDetails.name
             navail_start = bookDetails.avail_start
             navail_end = bookDetails.avail_end
-            return render_to_response('editResource.html', {'form': form, 'state': state, 'init': init, 'oldName': oldName, 'oldAvail': oldAvail, 'oldEnd': oldEnd,'existBook':existBook}, context_instance=RequestContext(request))        
-         
-
+            return render_to_response('editResource.html', {'form': form, 'state': state, 'init': init, 'editName': editName, 'navail_start': navail_start, 'navail_end': navail_end}, context_instance=RequestContext(request))        
     else:
         
         data = {'name': '{{book}}', 'avail_start':'{{existBook.avail_start}}', 'avail_end': '{{existBook.avail_end}}'}
