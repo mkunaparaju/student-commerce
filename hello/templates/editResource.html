@@ -4,7 +4,7 @@
 
 
 <form action="" method="post">{% csrf_token %}
-		{% if init %}
+		{% if init %}{{book}}
 		{{state}}
 		{{form.as_p}}
     <strong>Description Tags:</strong> <input type="texbox" name="descTags" value = "" maxlength="200" size="50"></br>

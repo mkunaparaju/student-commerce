@@ -90,7 +90,7 @@ def landing(request):
         #print user
 
         return render_to_response('landing.html',{'book': book, 'user_reserved': user_reserved, 'book_own':book_own, 'user':request.user},context_instance=RequestContext(request))
-        
+
     else:
         return render_to_response('auth.html',context_instance=RequestContext(request))
 
@@ -205,7 +205,7 @@ def editResource(request, book):
     oldAvail = existBook.avail_start
     oldEnd = existBook.avail_end
     if request.method == 'POST':
-        form = EditBookForm(request.POST, instance=existBook,)
+        form = EditBookForm(request.POST, instance=existBook,initial= {'name':oldName, 'avail_start':oldAvail, 'avail_end': oldEnd})
         if form.is_valid():
 
             bookDetails = form.save(commit=False)
@@ -226,8 +226,7 @@ def editResource(request, book):
         
         data = {'name': '{{book}}', 'avail_start':'{{existBook.avail_start}}', 'avail_end': '{{existBook.avail_end}}'}
         form = EditBookForm(initial= {'name':oldName, 'avail_start':oldAvail, 'avail_end': oldEnd})
-
-    return render_to_response('editResource.html',{'state': state, 'form':form, 'init': init, 'book':book},context_instance=RequestContext(request))  
+        return render_to_response('editResource.html',{'state': state, 'form':form, 'init': init, 'book':book, 'book': book},context_instance=RequestContext(request))  
 
 def delReserve(request, reserve):
     state = 'Delete the Reservation for '
