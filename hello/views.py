@@ -87,7 +87,7 @@ def landing(request):
 
 
        # book_user_reserved = Book.objects.filter(book_id = user_reserved.book)
-        book_own = Book.objects.all().filter(owner_user = user.id, avail_end__gte = timezone.now())
+        book_own = Book.objects.all().filter(owner_user = user.id, avail_end__gte = timezone.now()).order_by('avail_start')
         #print user
 
         return render_to_response('landing.html',{'book': book, 'user_reserved': user_reserved, 'book_own':book_own, 'user':request.user},context_instance=RequestContext(request))
