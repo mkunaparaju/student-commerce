@@ -273,8 +273,8 @@ def bookOwner(request, owner):
     #user = AuthUser.objects.get(username = owner)
     #user = AuthUser.objects.get(pk=owner)
             
-    books = Book.objects.filter(owner_user = owner)
-    reservations = Reservation.objects.filter(reserved_user = owner)
+    books = Book.objects.filter(owner_user = owner, avail_end__gte = timezone.now())
+    reservations = Reservation.objects.filter(reserved_user = owner, reserved_end__gte = timezone.now())
 
     return render_to_response('bookOwner.html',{'books':books, 'reservations': reservations},context_instance=RequestContext(request))
 

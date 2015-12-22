@@ -2,24 +2,28 @@
 {% block content %}
 
 
-<form action="" method="post">{% csrf_token %}
+<form action="" class = "form-inline" method="post">{% csrf_token %}
 		
 		{% if init %}
 		{{state}}	
 		{{form.as_p}}
-		<strong>Description Tags:</strong> <input type="texbox" name="descTags" maxlength="200" size="50"></br>
+    </br>
+		<strong>Description Tags:</strong> <input type="texbox" class = "form-control" name="descTags" maxlength="200" size="50"></br>
 		</br>
-       	<input class = "btn-default" type="submit" value="Add the Book" />
+       	<input class = "btn-primary" type="submit" value="Add the Book" />
 
        	{% else %}
        	{{state}}
         </br>
+        
+
+
         Name: {{name}}
         </br>Availabilit Start Time : {{avail_start}}
         </br>Availability ENd time : {{avail_end}}
         </br>Description Tags: {{tags}}
          </br>
-         <a href="{% url 'hello.views.landing' %}">HOME</a>
+         <a href="{% url 'hello.views.landing' %}">HOME</a
          {% endif %}
 </form>	
 
