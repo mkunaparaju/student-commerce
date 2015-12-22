@@ -19,16 +19,14 @@
     <th>Reservation Start</th>
     <th>Reservation End</th>
     <th>Reserved by</th>
-    <th>Book Owner</th>
    	</tr>
     
     	{% for reserve in reservation %}
 		<tr>
 		<td>{{reserve.reserved_start}}</td> 
 		<td>{{reserve.reserved_end}}</td> 
-		<td>{{reserve.reserved_user.username}}</td>
-		<td>{{current_book.owner_user.username}}</td>   	
-		</tr>
+		<td><a href="/bookOwner/{{reserve.reserved_user.id}}">{{reserve.reserved_user.username}}</a></td>
+        </tr>
 		{% endfor %}
     	
     </tbody>
