@@ -96,7 +96,7 @@ USE_TZ = True
 
 
 # Parse database configuration from $DATABASE_URL
-DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] =  dj_database_url.config(default='mysql://root:@127.0.0.1/ost')
 
 # Enable Connection Pooling (if desired)
 #DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
@@ -111,11 +111,11 @@ ALLOWED_HOSTS = ['*']
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static/'),
+    os.path.join(BASE_DIR, 'static'),
 )
 
 # Simplified static file serving.

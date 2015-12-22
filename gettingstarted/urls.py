@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import login
 from django.contrib.auth.views import logout
+from django.conf import settings
 
 from django.contrib import admin
 admin.autodiscover()
@@ -27,7 +28,8 @@ urlpatterns = patterns('',
     url(r'^landing/(?P<book>[0-9]+)/editResource/$', 'hello.views.editResource'),
     url(r'^(?P<book>[0-9]+)/rssFeed$', 'hello.views.rssFeed'),
     url(r'^landing/(?P<tagid>[0-9]+)/showTag$', 'hello.views.showTag'),
-
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
+    {'document_root', settings.STATIC_ROOT}),
     #url(r'^logout/$', 'django.contrib.auth.views.logout'),
     #url(r'^db', hello.views.db, name='db'),
     #url(r'^admin/', include(admin.site.urls)),
