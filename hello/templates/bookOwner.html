@@ -19,8 +19,7 @@ Reservations of the user </br>
 		<td>{{books.reserved_start}}</td> 
 		<td>{{books.reserved_end}}</td> 
 		<td>{{books.duration}}</td> 
-		<td>{{books.book.owner_user.username}}</td> 
-		
+		<td><a href="/bookOwner/{{books.book.owner_user.id}}">{{books.book.owner_user.username}}</a></td>
 		</tr>
 		{% endfor %}
     	
