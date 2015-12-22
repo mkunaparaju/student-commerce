@@ -26,6 +26,7 @@ SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
+
 #LOGIN_REDIRECT_URL = '/mainmenu/'
 TEMPLATE_CONTEXT_PROCESSORS = ('django.core.context_processors.request')
 # Application definition
@@ -89,7 +90,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
