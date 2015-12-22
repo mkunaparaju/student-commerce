@@ -200,7 +200,7 @@ def addReserve(request,book):
 def editResource(request, book):
     state = 'Edit the book details'
     init = True
-    existBook = Book.objects.get(book_id = book)
+    existBook = Book.objects.get(pk = book)
     oldName = existBook.name
     oldAvail = existBook.avail_start
     oldEnd = existBook.avail_end
@@ -219,14 +219,14 @@ def editResource(request, book):
             editName = bookDetails.name
             navail_start = bookDetails.avail_start
             navail_end = bookDetails.avail_end
-            return render_to_response('editResource.html', {'form': form, 'state': state, 'init': init, 'editName': editName, 'navail_start': navail_start, 'navail_end': navail_end,'existBook':existBook}, context_instance=RequestContext(request))        
+            return render_to_response('editResource.html', {'form': form, 'state': state, 'init': init, 'oldName': oldName, 'oldAvail': oldAvail, 'oldEnd': oldEnd,'existBook':existBook}, context_instance=RequestContext(request))        
          
 
     else:
         
-        data = {'name': '{{book}}', 'avail_start':'{{existBook.avail_start}}', 'avail_end': '{{existBook.avail_end}}'}
+        # data = {'name': '{{book}}', 'avail_start':'{{existBook.avail_start}}', 'avail_end': '{{existBook.avail_end}}'}
         form = EditBookForm(initial= {'name':oldName, 'avail_start':oldAvail, 'avail_end': oldEnd})
-        return render_to_response('editResource.html',{'state': state, 'form':form, 'init': init, 'book':book, 'book': book},context_instance=RequestContext(request))  
+    return render_to_response('editResource.html',{'state': state, 'form':form, 'init': init},context_instance=RequestContext(request))  
 
 def delReserve(request, reserve):
     state = 'Delete the Reservation for '
