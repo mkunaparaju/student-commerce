@@ -3,7 +3,7 @@
 {% block content %}
 
 <form action="addBook/" method="post">{% csrf_token %}
-Books reserved by the {{user.username}}
+<strong>Books reserved by the {{user.username}}</strong>
 </br> Present time : {{time}}
 </br>
 	<table class = "table" border="1" cellpadding="3" id="printTable" >
@@ -32,7 +32,7 @@ Books reserved by the {{user.username}}
     </table>
     </br>
 
-Total Available Books</br> 
+<strong>Total Available Books</strong></br> 
 	<table class = "table" border="1" cellpadding="3" id="printTable">
 		<tbody>
 			<tr>
@@ -53,7 +53,7 @@ Total Available Books</br>
 	</table>
 	</br>
 
-Books Owned by the User</br>
+<strong>Books Owned by the {{user.username}}</strong></br>
 
 <table class = "table" border="1" cellpadding="3" id="printTable">
 		<tbody>
