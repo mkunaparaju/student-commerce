@@ -82,15 +82,15 @@ def landing(request):
 
         book = Book.objects.all().order_by('-last_reserve').filter(avail_end__gte = timezone.now())
 
-        user_reserved = Reservation.objects.filter(reserved_user = user.id).order_by('reserved_start')
+        user_reserved = Reservation.objects.filter(reserved_user = user.id).order_by('reserved_start').filter(reserved_end__gte = timezone.now())
        
-
+        time = timezone.now()
 
        # book_user_reserved = Book.objects.filter(book_id = user_reserved.book)
         book_own = Book.objects.all().filter(owner_user = user.id, avail_end__gte = timezone.now()).order_by('avail_start')
         #print user
 
-        return render_to_response('landing.html',{'book': book, 'user_reserved': user_reserved, 'book_own':book_own, 'user':request.user},context_instance=RequestContext(request))
+        return render_to_response('landing.html',{'time':time, 'book': book, 'user_reserved': user_reserved, 'book_own':book_own, 'user':request.user},context_instance=RequestContext(request))
 
     else:
         return render_to_response('auth.html',context_instance=RequestContext(request))

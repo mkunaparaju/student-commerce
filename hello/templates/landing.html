@@ -4,6 +4,7 @@
 
 <form action="addBook/" method="post">{% csrf_token %}
 Books reserved by the {{user.username}}
+</br> Present time : {{time}}
 </br>
 	<table class = "table" border="1" cellpadding="3" id="printTable" >
     <tbody><tr>
