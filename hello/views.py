@@ -79,14 +79,15 @@ def logout_view(request):
 def landing(request):
     user = request.user
     if user.is_active : 
-        book = Book.objects.all().order_by('-last_reserve')
+
+        book = Book.objects.all().order_by('-last_reserve').filter(avail_end__gte = timezone.now())
 
         user_reserved = Reservation.objects.filter(reserved_user = user.id, reserved_end__gte = timezone.now(),).order_by('reserved_start')
        
 
 
        # book_user_reserved = Book.objects.filter(book_id = user_reserved.book)
-        book_own = Book.objects.filter(owner_user = user.id)
+        book_own = Book.objects.all().filter(owner_user = user.id, avail_end__gte = timezone.now())
         #print user
 
         return render_to_response('landing.html',{'book': book, 'user_reserved': user_reserved, 'book_own':book_own, 'user':request.user},context_instance=RequestContext(request))
@@ -97,6 +98,7 @@ def landing(request):
 def addBook(request):
     state = 'Enter New Book Details here'
     init = True
+    valid_avail = True
     if request.method == 'POST':
         form = BookForm(request.POST)
         if form.is_valid():
@@ -105,8 +107,14 @@ def addBook(request):
             book = form.save(commit=False)
             book.owner_user = AuthUser.objects.get(pk=request.user.id)
             book.last_reserve = timezone.now()
+            if book.avail_start > book.avail_end:
+                valid_avail = False
+                state = "PLease enter valid availability time details"
+                return render_to_response('addBook.html', {'form': form, 'state': state, 'valid_avail':valid_avail}, context_instance=RequestContext(request))
             
             book.save()
+            
+
             tags = request.POST.get('descTags')
             allTags = tags.split(',')
             for x in allTags:
@@ -118,15 +126,15 @@ def addBook(request):
                     addTag = Tag.objects.create(tag_name = x)
                     addTag.save()
                 addTagBook = TagBook(tag = addTag, book = book)
-                addTagBook.save()
-                    
+                if valid_avail:
+                    addTagBook.save()    
 
+            
             state = 'Newly added Book Details are:'
             init = False
             name = book.name
             avail_start = book.avail_start
             avail_end = book.avail_end
-
             
             return render_to_response('addBook.html', {'form': form, 'state': state, 'init': init, 'name': name, 'avail_start': avail_start, 'avail_end': avail_end, 'tags':tags}, context_instance=RequestContext(request))   
     else:
@@ -200,18 +208,24 @@ def addReserve(request,book):
 def editResource(request, book):
     state = 'Edit the book details'
     init = True
+    valid_avail = True
     existBook = Book.objects.get(pk = book)
     oldName = existBook.name
     oldAvail = existBook.avail_start
     oldEnd = existBook.avail_end
     if request.method == 'POST':
-        form = EditBookForm(request.POST, instance=existBook,initial= {'name':oldName, 'avail_start':oldAvail, 'avail_end': oldEnd})
+        form = EditBookForm(request.POST, instance=existBook)
         if form.is_valid():
 
             bookDetails = form.save(commit=False)
             #bookDetails.book_id = existBook.book_id
             bookDetails.owner_user = AuthUser.objects.get(pk=request.user.id)
             bookDetails.last_reserve = existBook.last_reserve
+            if bookDetails.avail_start > bookDetails.avail_end:
+                valid_avail = False
+                state = "PLease enter valid availability time details"
+                return render_to_response('addBook.html', {'form': form, 'state': state, 'valid_avail':valid_avail}, context_instance=RequestContext(request))
+            
             bookDetails.save()  
 
             state = 'Newly Edited Details of the book are'
@@ -224,8 +238,8 @@ def editResource(request, book):
 
     else:
         
-        # data = {'name': '{{book}}', 'avail_start':'{{existBook.avail_start}}', 'avail_end': '{{existBook.avail_end}}'}
-        form = EditBookForm(initial= {'name':oldName, 'avail_start':oldAvail, 'avail_end': oldEnd})
+        data = {'name': '{{book}}', 'avail_start':'{{existBook.avail_start}}', 'avail_end': '{{existBook.avail_end}}'}
+        form = EditBookForm(instance=existBook)
     return render_to_response('editResource.html',{'state': state, 'form':form, 'init': init},context_instance=RequestContext(request))  
 
 def delReserve(request, reserve):

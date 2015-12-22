@@ -16,11 +16,20 @@ class BookForm(forms.ModelForm):
        }
 
 class EditBookForm(forms.ModelForm):
+	
+	# def __init__(self, *args, **kwargs):
+	# 	self.user = user
 
-    class Meta:
-        model = Book
-        fields = ('name', 'avail_start', 'avail_end')
-        widgets = {
+ #        super(EditBookForm, self).__init__(*args, **kwargs)
+ #        self.fields['name'].initial = book.name
+ #        self.fields['avail_start'].initial = book.avail_start
+ #        self.fields['avail_end'].initial = book.avail_end
+
+    
+	class Meta:
+		model = Book
+		fields = ('name', 'avail_start', 'avail_end')
+		widgets = {
             'avail_start': DateTimeWidget(attrs={'id':"yourdatetimeid"}, usel10n = True, bootstrap_version=3),
             'avail_end': DateTimeWidget(attrs={'id':"datetimeid"}, usel10n = True, bootstrap_version=3)
        }

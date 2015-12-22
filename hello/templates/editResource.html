@@ -12,12 +12,15 @@
        	<input type="submit" value="Edit the Book" />
        	{% else %}
        	{{state}}: {{editName}}	
+
         </br>Available Start Time : {{navail_start}}
         </br>Available End time : {{navail_end}}
         
         </br>
+
+        {% endif %}
         <!-- <a href="{% url 'hello.views.landing' %}">HOME</a> -->
-         {% endif %}
+      
 </form>			
 
 
