@@ -82,7 +82,7 @@ def landing(request):
 
         book = Book.objects.all().order_by('-last_reserve').filter(avail_end__gte = timezone.now())
 
-        user_reserved = Reservation.objects.filter(reserved_user = user.id, reserved_end__gte = timezone.now(),).order_by('reserved_start')
+        user_reserved = Reservation.objects.filter(reserved_user = user.id).order_by('reserved_start')
        
 
 
