@@ -185,6 +185,7 @@ def addReserve(request,book):
             bookavail_end = book.avail_end
 
             if (len(overlapObj) == 0) :
+               
                 reserve.save()
                 state = 'Newly added Reservation Details for the book '
                 error = False
@@ -245,6 +246,7 @@ def delReserve(request, reserve):
     init = 1
     existReserve = Reservation.objects.get(reserved_id = reserve)
     if request.method == 'POST':
+        existReserve.count = existReserve.count -1
         existReserve.delete()
         init = 0
         state = 'Deleted the Reservation'
